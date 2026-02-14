@@ -794,6 +794,59 @@ section:nth-of-type(8)::before {
   padding: 60px 0; /* можно регулировать */
 }
 
+@media (max-width: 768px) {
+
+  /* HERO */
+  .hero {
+    padding: 120px 20px 60px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hero-inner {
+    width: 100%;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+
+  /* КНОПКИ */
+  .btn {
+    display: block;
+    width: 100%;
+    margin: 12px 0 0;
+  }
+
+  .btn-outline {
+    margin-left: 0;
+  }
+
+  /* GRID → 1 колонка */
+  .problems-grid,
+  .value-grid,
+  .flow-steps,
+  .approach-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* SECTION padding меньше */
+  section {
+    padding: 60px 20px;
+  }
+
+  /* HEADER компактнее */
+  header {
+    padding: 14px 18px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+}
 
 
 
