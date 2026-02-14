@@ -257,9 +257,10 @@ padding-top: 100px;; /* под высоту header */
 }
 
 .hero-inner {
-  width: 60%;
-  margin-left: 13%;
-  padding: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 
@@ -650,6 +651,12 @@ section:nth-of-type(8)::before {
       .grid-3 { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 768px) {
+  .hero {
+    padding: 120px 20px 60px;
+  }
+}
+
     .chat {
   width: 90%;
   font-size: 12px;
@@ -848,6 +855,9 @@ section:nth-of-type(8)::before {
   }
 }
 
+html, body {
+  overflow-x: hidden;
+}
 
 
   </style>
