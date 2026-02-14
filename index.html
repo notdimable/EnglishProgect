@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeakFlow</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+      header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 16px 40px;
+
+  background: rgba(10, 10, 25, 0.6);
+  backdrop-filter: blur(12px);
+
+  z-index: 1000;
+}
+
+
+    a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+a:active {
+  color: inherit;
+}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+       background: radial-gradient(circle at top, #0b1224 0%, #020617 60%, #01030a 100%);
+      color: #f9fafb;
+      position: relative;
+  z-index: 1;
+    }
+
+    section {
+      padding: 80px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+  section {
+    padding: 60px 0;
+  }
+}
+
+    /* fullscreen-секции не ограничиваем */
+.fullscreen-section {
+  max-width: none;
+  margin: 0;
+  width: 100%;
+}
+
+    h1 { font-size: 56px; margin-bottom: 20px; }
+    h2 { font-size: 36px; margin-bottom: 16px; }
+    p { color: #9ca3af; }
+
+  /* .center { text-align: center; } */
+
+    .left: {;
+      text-align: left;
+    }
+
+    /* ---------- BUTTONS ---------- */
+
+    .btn {
+      padding: 14px 26px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+    }
+
+    .btn-outline {
+      border: 1px solid #374151;
+      color: #d1d5db;
+      margin-left: 12px;
+    }
+
+    /* ===== APPROACH SECTION ===== */
+
+.approach-section {
+  padding: 140px 24px 80px;
+}
+
+.approach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+}
+
+.approach-card {
+  padding: 36px;
+  border-radius: 22px;
+
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(14px);
+
+  text-align: left;
+
+  transition: all 0.35s ease;
+}
+
+.approach-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(168,85,247,0.5);
+  box-shadow: 0 30px 80px rgba(168,85,247,0.18);
+}
+
+.approach-icon {
+  font-size: 30px;
+  margin-bottom: 18px;
+}
+
+.approach-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.approach-card p {
+  font-size: 14px;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+
+    /* ===== BACKGROUND WAVES ===== */
+
+.bg-waves {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* сами волны */
+.bg-waves::before,
+.bg-waves::after {
+  content: "";
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  top: -20%;
+  left: -20%;
+  background: radial-gradient(circle at 30% 40%, rgba(99,102,241,0.12), transparent 60%),
+              radial-gradient(circle at 70% 60%, rgba(168,85,247,0.10), transparent 60%);
+  filter: blur(80px);
+  animation: wavesMove 18s ease-in-out infinite alternate;
+}
+
+/* вторая волна медленнее */
+.bg-waves::after {
+  animation-duration: 28s;
+  opacity: 0.7;
+}
+
+/* движение */
+@keyframes wavesMove {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(80px, -60px) scale(1.15);
+  }
+}
+
+
+
+header.scrolled {
+  background: rgba(10, 10, 25, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav a {
+      margin-left: 24px;
+      color: #9ca3af;
+      text-decoration: none;
+       position: relative;
+  transition: color 0.25s ease;
+    }
+
+    nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg,#6366f1,#a855f7);
+  transition: width 0.25s ease;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+    /* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+padding-top: 100px;; /* под высоту header */
+  width: 100%;
+  max-width: none;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  min-height: 100vh;   /* ← просто весь экран */
+  padding: 120px 0 60px;
+}
+
+.hero-inner {
+  width: 60%;
+  margin-left: 13%;
+  padding: 0;
+}
+
+
+    /* ---------- GRID ---------- */
+
+   .grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+    /* ---------- CARD BG ---------- */
+
+    .card-bg {
+       min-height: 220px;
+  border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      min-height: 180px;
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border-radius: 20px;
+      background-size: cover;
+      background-position: center;
+      transition: 
+    transform 0.35s cubic-bezier(0.4,0,0.2,1),
+    box-shadow 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .card-bg:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+.btn {
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(99,102,241,0.35);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+    .card-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(2,6,23,0.55),
+        rgba(2,6,23,0.92)
+      );
+      z-index: 1;
+    }
+
+    .card-bg h3,
+    .card-bg p {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ===== FULLSCREEN БЛОК ПРОБЛЕМ ===== */
+
+.fullscreen-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+}
+
+.problems {
+   padding-top: 40px;
+}
+
+/* чуть больше воздуха между рядами */
+.problems .grid-3 {
+  margin-top: 28px;
+}
+
+.reveal .grid-3 .card-bg {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: 
+    opacity 0.6s cubic-bezier(0.4,0,0.2,1),
+    transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.grid-3.revealed .card-bg {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.grid-3.revealed .card-bg:nth-child(1) { transition-delay: 0.05s; }
+.grid-3.revealed .card-bg:nth-child(2) { transition-delay: 0.12s; }
+.grid-3.revealed .card-bg:nth-child(3) { transition-delay: 0.18s; }
+
+/* ===== АНИМАЦИЯ ПОЯВЛЕНИЯ ===== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: 
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+    /* ---------- MOBILE MOCKUP ---------- */
+
+    .phone {
+      width: 260px;
+      height: 520px;
+      border-radius: 40px;
+      background: #020617;
+      border: 2px solid #1f2937;
+      box-shadow: 0 0 60px rgba(99,102,241,0.25);
+      margin: 40px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    .subtitle {
+  
+      max-width: 700px;
+      color: #9ca3af;
+      font-size: 15px;
+      line-height: 1.4;
+      
+}
+
+/* ---------- COMPARE TABLE ---------- */
+
+.compare-table {
+  margin-top: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #111827;
+  background: #020617;
+}
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 1.2fr repeat(4, 1fr);
+  padding: 18px 20px;
+  border-bottom: 1px solid #111827;
+  font-size: 14px;
+}
+
+.compare-row:last-child {
+  border-bottom: none;
+}
+
+.compare-head {
+  background: rgba(99,102,241,0.08);
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.compare-row div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.compare-row div:first-child {
+  justify-content: flex-start;
+  font-weight: 500;
+}
+
+/* выделение нашего продукта */
+.highlight {
+  background: linear-gradient(
+    90deg,
+    rgba(99,102,241,0.12),
+    rgba(168,85,247,0.12)
+  );
+  font-weight: 600;
+}
+
+/* ===== MODERN PROBLEMS ===== */
+
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 48px;
+}
+
+.problem-card {
+  padding: 32px;
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(12px);
+
+  text-align: left;
+
+  transition: all 0.3s ease;
+}
+
+.problem-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(168,85,247,0.4);
+  box-shadow: 0 20px 60px rgba(168,85,247,0.15);
+}
+
+.problem-card .icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.problem-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.problem-card p {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* ===== VALUE SECTION ===== */
+
+.value-section {
+  padding: 140px 24px 60px;
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 48px;
+}
+
+.value-card {
+  padding: 36px;
+  border-radius: 22px;
+
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(14px);
+
+  text-align: left;
+
+  transition: all 0.35s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(168,85,247,0.5);
+  box-shadow: 0 30px 80px rgba(168,85,247,0.18);
+}
+
+.value-icon {
+  font-size: 30px;
+  margin-bottom: 18px;
+}
+
+.value-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.value-card p {
+  font-size: 14px;
+  color: #9ca3af;
+}
+/* ===== SPEECH FLOW (MODERN) ===== */
+
+.speech-flow {
+  padding-top: 60px;
+}
+
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  margin-top: 64px;
+}
+
+.flow-step {
+  position: relative;
+  padding-left: 28px;
+  text-align: left;
+}
+
+/* светящаяся точка вместо номера */
+.step-dot {
+  position: absolute;
+  left: 0;
+  top: 8px;
+
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  box-shadow: 0 0 18px rgba(168,85,247,0.9);
+}
+
+.flow-step h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.flow-step p {
+  font-size: 14px;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99,102,241,0.25), transparent 70%);
+  top: -150px;
+  left: -150px;
+  filter: blur(80px);
+  animation: heroGlow 12s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+  from {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate(80px, 60px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+section:nth-of-type(8) {
+  position: relative;
+}
+
+section:nth-of-type(8)::before {
+  content: "";
+  position: absolute;
+  inset: -200px;
+  background: radial-gradient(circle, rgba(168,85,247,0.18), transparent 70%);
+  filter: blur(120px);
+  z-index: -1;
+}
+
+
+    /* ---------- FOOTER ---------- */
+
+    footer {
+      border-top: 1px solid #111827;
+      padding: 40px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    .chat {
+  width: 90%;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.msg {
+  padding: 8px 10px;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+.msg.ai {
+  background: #111827;
+  align-self: flex-start;
+}
+
+.msg.user {
+  background: linear-gradient(90deg,#6366f1,#a855f7);
+  align-self: flex-end;
+}
+
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+/* ===== AI SECTION ===== */
+
+.ai-section {
+  padding-top: 120px;
+}
+
+/* ===== MACBOOK MOCKUP ===== */
+
+/* ===== MACBOOK REALISTIC ===== */
+
+.macbook {
+  margin: 70px auto 50px;
+  width: 900px;
+  max-width: 100%;
+  perspective: 1200px;
+}
+
+/* крышка ноутбука */
+.macbook-lid {
+  background: linear-gradient(#0b0f1a, #020617);
+  border-radius: 20px;
+  padding: 14px 14px 18px;
+  border: 1px solid #1f2937;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.7),
+    0 0 80px rgba(99,102,241,0.12);
+
+  transform: rotateX(6deg);
+  position: relative;
+}
+
+/* камера */
+.macbook-camera {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #111827;
+  margin: 0 auto 10px;
+  box-shadow: 0 0 0 2px #020617;
+}
+
+/* экран */
+.macbook-screen {
+  background: #020617;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* заглушка приложения */
+.app-placeholder {
+  height: 420px;
+  background: radial-gradient(
+      circle at 30% 30%,
+      rgba(99,102,241,0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 70% 70%,
+      rgba(168,85,247,0.18),
+      transparent 60%
+    ),
+    #020617;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* основание макбука */
+.macbook-base {
+  height: 26px;
+  width: 96%;
+  margin: -6px auto 0;
+
+  background: linear-gradient(#111827, #020617);
+  border-radius: 0 0 26px 26px;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+
+  position: relative;
+}
+
+/* тачпад */
+.macbook-trackpad {
+  width: 120px;
+  height: 8px;
+  border-radius: 6px;
+  background: #0f172a;
+  margin: 9px auto 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.icon i,
+.value-icon i {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.5;
+  color: #6C7CFF;
+}
+
+.center-cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0; /* можно регулировать */
+}
+
+
+
+
+  </style>
+</head>
+
+<body>
+<div class="bg-waves"></div>
+<canvas id="particles"></canvas>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">SpeakFlow</div>
+  <nav>
+    <a href="auth.html">Вход</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+  <div>
+    <h1>Разговорный Английский</h1>
+    <p>Живое общение с людьми и AI-собеседником в одной среде<br>  
+        Без зубрёжки. Только реальная разговорная практика</p>
+
+    <a href="auth.html" class="btn btn-primary">Начать бесплатно</a>
+    <a class="btn btn-outline">Смотреть демо</a>
+  </div>
+  </div>
+</section>
+
+<!-- БОЛЬ И СМЫСЛ -->
+<!-- ПРОБЛЕМА -->
+<section class="problems modern-problems">
+  <div class="center">
+    <h2>Почему ты до сих пор не говоришь по-английски</h2>
+    <p class="subtitle">
+      Проблема не в способностях.  
+      Проблема в самом подходе к обучению.
+    </p>
+
+    <div class="problems-grid">
+
+    <div class="problem-card">
+  <div class="icon"><i data-lucide="message-circle"></i></div>
+  <h3>Нет регулярной разговорной практики</h3>
+  <p>Ты учишь язык, но почти не используешь его в реальной речи.</p>
+</div>
+
+<div class="problem-card">
+  <div class="icon"><i data-lucide="book-open"></i></div>
+  <h3>Слишком много теории, мало общения</h3>
+  <p>Правила знаешь, а говорить всё равно сложно и страшно.</p>
+</div>
+
+<div class="problem-card">
+  <div class="icon"><i data-lucide="globe"></i></div>
+  <h3>Нет среды для ежедневного общения</h3>
+  <p>Без постоянной практики язык не превращается в навык.</p>
+</div>
+
+
+    </div>
+  </div>
+</section>
+<section class="value-section reveal">
+  <div class="center">
+    <h2>SpeakFlow меняет способ изучения английского</h2>
+    <p class="subtitle">
+      Мы убрали зубрёжку, страх ошибок и годы ожидания.  
+      Оставили только то, что действительно учит говорить —  
+      ежедневное живое общение с людьми и AI.
+    </p>
+
+    <div class="value-grid">
+
+     <div class="value-card">
+  <div class="value-icon"><i data-lucide="mic"></i></div>
+  <h3>Разговор с первого дня</h3>
+  <p>Ты начинаешь говорить сразу, а не после месяцев подготовки.</p>
+</div>
+
+<div class="value-card">
+  <div class="value-icon"><i data-lucide="sparkles"></i></div>
+  <h3>AI, который помогает говорить</h3>
+  <p>Исправляет ошибки, подсказывает фразы и поддерживает диалог.</p>
+</div>
+
+<div class="value-card">
+  <div class="value-icon"><i data-lucide="users"></i></div>
+  <h3>Постоянная разговорная среда</h3>
+  <p>Чаты, голосовые комнаты и AI-диалоги делают практику ежедневной.</p>
+</div>
+
+<div class="value-card">
+  <div class="value-icon"><i data-lucide="brain"></i></div>
+  <h3>Понимание через использование</h3>
+  <p>Каждое новое выученное слово сразу попадает в живой диалог, а не в список для зубрёжки.</p>
+</div>
+
+<div class="value-card">
+  <div class="value-icon"><i data-lucide="smartphone"></i></div>
+  <h3>Удобное приложение</h3>
+  <p>Практикуй разговорный английский в любое время —
+без уроков, расписаний и стресса. Просто открыл и начал говорить.</p>
+</div>
+
+<div class="value-card">
+  <div class="value-icon"><i data-lucide="trending-up"></i></div>
+  <h3>Рост без усилия</h3>
+  <p>Исправления, повторения и прогресс происходят прямо в процессе общения.</p>
+</div>
+
+
+    </div>
+  </div>
+
+</section>
+
+<section class="center-cta">
+  <a href="auth.html" class="btn btn-primary">Попробовать</a>
+</section>
+
+
+
+<!-- АНГЛИЙСКИЙ = НАВЫК -->
+<section class="speech-flow">
+  <div class="center">
+    <h2>Как знания превращаются в живую речь</h2>
+    <p class="subtitle">
+      SpeakFlow объединяет понимание, практику и повторение  
+      в один непрерывный разговорный поток.
+    </p>
+
+    <div class="flow-steps">
+
+      <div class="flow-step">
+        <div class="step-dot"></div>
+        <h3>Понимание в контексте</h3>
+        <p>Слова появляются сразу в живых примерах с произношением и смыслом.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-dot"></div>
+        <h3>Мгновенный диалог</h3>
+        <p>Ты используешь новые фразы в разговоре с людьми или AI в тот же момент.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-dot"></div>
+        <h3>Естественное закрепление</h3>
+        <p>Повторение происходит само — через регулярное живое общение.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- НАШ ПОДХОД -->
+<section class="approach-section">
+  <div class="center">
+    <h2>SpeakFlow — это не курс. Это среда для речи.</h2>
+    <p class="subtitle">
+      Мы объединили людей, AI и ежедневную практику  
+      в единую систему, где язык становится навыком сам, чтобы ваш мозг учил язык за вас
+    </p>
+
+    <div class="approach-grid">
+
+      
+    </div>
+  </div>
+</section>
+
+
+<!-- МОБИЛЬНОЕ ПРИЛОЖЕНИЕ -->
+<section class="center">
+  <h2>Учись где угодно</h2>
+  <p>Практикуй английский в любое время — дома, в дороге, на прогулке.</p>
+
+  <div class="phone">
+    <div class="chat">
+  <div class="msg ai">Hi! How was your day?</div>
+  <div class="msg user">It was great, I learned new words.</div>
+  <div class="msg ai">Awesome! Want to practice speaking?</div>
+</div>
+  </div>
+</section>
+
+<!-- AI -->
+<section class="center ai-section">
+  <h2>Твой личный AI-собеседник</h2>
+  <p class="subtitle">
+    Общайся голосом или текстом.  
+    Получай мгновенные исправления.  
+    Говори свободно уже в процессе обучения.
+  </p>
+
+  <!-- MacBook mockup -->
+  <div class="macbook">
+  <div class="macbook-lid">
+    <div class="macbook-camera"></div>
+
+    <div class="macbook-screen">
+      <div class="app-placeholder">
+        SpeakFlow AI Preview
+      </div>
+    </div>
+  </div>
+
+  <div class="macbook-base">
+    <div class="macbook-trackpad"></div>
+  </div>
+</div>
+
+  
+</section>
+
+<!-- СРАВНЕНИЕ -->
+<section class="center">
+  <h2>Сравни обычное обучение и SpeakFlow</h2>
+  <p class="subtitle">
+    Мы убрали всё лишнее и оставили только то,  
+    что реально помогает начать говорить.
+  </p>
+
+  <div class="compare-table">
+
+    <div class="compare-row compare-head">
+      <div>Метод</div>
+      <div>Практика каждый день</div>
+      <div>Живое общение</div>
+      <div>Стоимость</div>
+      <div>Результат</div>
+    </div>
+
+    <div class="compare-row">
+      <div>Учитель</div>
+      <div>❌</div>
+      <div>✔️</div>
+      <div>Высокая</div>
+      <div>Медленный</div>
+    </div>
+
+    <div class="compare-row">
+      <div>Языковая школа</div>
+      <div>❌</div>
+      <div>Частично</div>
+      <div>Высокая</div>
+      <div>Средний</div>
+    </div>
+
+    <div class="compare-row">
+      <div>Книги и курсы</div>
+      <div>❌</div>
+      <div>❌</div>
+      <div>Низкая</div>
+      <div>Слабый</div>
+    </div>
+
+    <div class="compare-row highlight">
+      <div>SpeakFlow</div>
+      <div>✔️</div>
+      <div>✔️</div>
+      <div>Низкая</div>
+      <div>Быстрый</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- СИЛЬНЫЙ CTA -->
+<section class="center">
+  <h2>Зачем переплачивать? Зачем терять годы?</h2>
+  <p class="subtitle">
+    Начни говорить по-английски уже сейчас
+  </p>
+
+  <a href="auth.html" class="btn btn-primary">Начать бесплатно</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 SpeakFlow — Социальная сеть изучения английского
+</footer>
+<script>
+window.addEventListener("scroll", () => {
+  const header = document.querySelector("header");
+
+  if (window.scrollY > 10) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+});
+
+  const reveals = document.querySelectorAll('.reveal');
+
+function revealOnScroll() {
+  const windowHeight = window.innerHeight;
+
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+
+    if (top < windowHeight - 100) {
+      el.classList.add('active');
+
+      const grid = el.querySelector('.grid-3');
+      if (grid) grid.classList.add('revealed');
+    }
+  });
+}
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+let mouseX = 0;
+let mouseY = 0;
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+window.addEventListener("mousemove", e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.2;
+    this.speedY = (Math.random() - 0.5) * 0.2;
+  }
+
+  update() {
+    this.x += this.speedX + (mouseX - canvas.width / 2) * 0.00002;
+    this.y += this.speedY + (mouseY - canvas.height / 2) * 0.00002;
+
+    if (this.x < 0 || this.x > canvas.width) this.x = Math.random() * canvas.width;
+    if (this.y < 0 || this.y > canvas.height) this.y = Math.random() * canvas.height;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(168,85,247,0.6)";
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 60; i++) {
+  particles.push(new Particle());
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+
+
+</script>
+<script>
+  lucide.createIcons();
+</script>
+</body>
+</html>
